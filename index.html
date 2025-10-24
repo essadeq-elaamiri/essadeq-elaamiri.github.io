@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Essadeq EL AAMIRI - Software Engineer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --accent: #06b6d4;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated background particles */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float-particle 20s infinite;
+        }
+
+        @keyframes float-particle {
+            0%, 100% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(50px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .edit-mode-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 12px 24px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--primary);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .edit-mode-toggle:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 30px;
+            padding: 60px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.8s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .profile-section {
+            text-align: center;
+        }
+
+        .profile-img {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+            animation: float 3s ease-in-out infinite;
+            overflow: hidden;
+            border: 5px solid white;
+            margin: 0 auto 20px;
+        }
+
+        .profile-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            animation: blink 1.5s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .hero-text h1 {
+            font-size: 3.2em;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient-shift 3s ease infinite;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { filter: hue-rotate(0deg); }
+            50% { filter: hue-rotate(10deg); }
+        }
+
+        .hero-text h2 {
+            font-size: 1.6em;
+            color: var(--secondary);
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .hero-text p {
+            color: #64748b;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .contact-links {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .contact-links a {
+            padding: 12px 24px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-links a::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .contact-links a:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .contact-links a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.4);
+            background: var(--secondary);
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            animation: slideUp 0.8s ease;
+            position: relative;
+        }
+
+        .section h2 {
+            font-size: 2em;
+            margin-bottom: 30px;
+            color: var(--primary);
+            position: relative;
+            padding-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .skill-category {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            padding: 25px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            border-color: var(--primary);
+        }
+
+        .skill-category h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .skill-icon {
+            font-size: 1.5em;
+        }
+
+        .tech-logos {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .tech-logo {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border-radius: 10px;
+            padding: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .tech-logo:hover {
+            transform: translateY(-5px) rotate(5deg);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .tech-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .experience-item, .education-item {
+            margin-bottom: 30px;
+            padding: 30px;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 15px;
+            border-left: 5px solid var(--primary);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .experience-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+        }
+
+        .experience-item:hover::before {
+            width: 100%;
+            opacity: 0.05;
+        }
+
+        .experience-item:hover, .education-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .experience-item h3, .education-item h3 {
+            color: var(--primary);
+            font-size: 1.4em;
+            margin-bottom: 8px;
+        }
+
+        .experience-item .meta, .education-item .meta {
+            color: var(--secondary);
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .meta-icon {
+            font-size: 1.1em;
+        }
+
+        .experience-item ul {
+            margin-left: 20px;
+            color: #475569;
+        }
+
+        .experience-item li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 10px;
+        }
+
+        .experience-item li::before {
+            content: '▸';
+            position: absolute;
+            left: -10px;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 20px;
+            padding: 0;
+            transition: all 0.4s ease;
+            border: 2px solid #e2e8f0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+            border-color: var(--primary);
+        }
+
+        .project-content {
+            padding: 30px;
+        }
+
+        .project-card h3 {
+            color: var(--primary);
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .project-card p {
+            color: #475569;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tech-tag {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .tech-tag:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+        }
+
+        .project-links {
+            display: flex;
+            gap: 12px;
+        }
+
+        .project-links a {
+            padding: 10px 20px;
+            background: var(--secondary);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 0.9em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .project-links a:hover {
+            background: var(--primary);
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        .certifications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .cert-card {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cert-card::before {
+            content: '🏆';
+            position: absolute;
+            font-size: 150px;
+            right: -30px;
+            bottom: -30px;
+            opacity: 0.1;
+        }
+
+        .cert-card:hover {
+            transform: scale(1.05) rotate(-2deg);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .cert-card h3 {
+            font-size: 1.3em;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cert-card p {
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        .edit-panel {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 500px;
+            height: 100vh;
+            background: white;
+            box-shadow: -5px 0 20px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .edit-panel.active {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        .edit-panel h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .edit-panel textarea {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            min-height: 400px;
+            resize: vertical;
+        }
+
+        .edit-panel button {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .edit-panel button:hover {
+            background: var(--secondary);
+            transform: scale(1.02);
+        }
+
+        .edit-panel .info {
+            background: #f0f9ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            color: #0369a1;
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .profile-img {
+                margin: 0 auto 20px;
+            }
+
+            .hero-text h1 {
+                font-size: 2em;
+            }
+
+            .contact-links {
+                justify-content: center;
+            }
+
+            .edit-panel {
+                width: 100%;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .meta {
+                flex-direction: column;
+                align-items: flex-start !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="bg-animation" id="bgAnimation"></div>
+
+    <!--<button class="edit-mode-toggle" onclick="toggleEditPanel()">✏️ Edit Data (JSON)</button>-->
+
+    <div class="edit-panel" id="editPanel">
+        <h3>Edit Portfolio Data</h3>
+        <div class="info">
+            💡 <strong>How to edit:</strong><br>
+            1. Modify the JSON data below<br>
+            2. Click "Save & Refresh" to see changes<br>
+            3. Copy the JSON to save it permanently<br>
+            4. Paste it back into the HTML file's portfolioData variable
+        </div>
+        
+        <textarea id="jsonEditor" spellcheck="false"></textarea>
+        
+        <button onclick="saveJSON()">💾 Save & Refresh</button>
+        <button onclick="copyJSON()">📋 Copy JSON</button>
+        <button onclick="toggleEditPanel()" style="background: #64748b;">❌ Close</button>
+    </div>
+
+    <div class="container" id="portfolio"></div>
+
+    <script>
+        // Create animated particles
+        function createParticles() {
+            const bgAnimation = document.getElementById('bgAnimation');
+            for (let i = 0; i < 15; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.width = Math.random() * 60 + 20 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+                bgAnimation.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        // Technology logos URLs
+        const techLogos = {
+            "Java": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg",
+            "Python": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+            "JavaScript": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
+            "TypeScript": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
+            "Spring": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg",
+            "Angular": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg",
+            "React": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+            "MySQL": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg",
+            "PostgreSQL": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg",
+            "MongoDB": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
+            "Docker": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
+            "Git": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
+            "Linux": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg",
+            "Node.js": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
+            "HTML": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
+            "CSS": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"
+        };
+
+        let portfolioData = {
+            "personal": {
+                "name": "Essadeq EL AAMIRI",
+                "title": "Software Engineer (Java, Spring, Angular)",
+                "summary": "OCP 21 Certified Backend Software Engineer with expertise in Java, Spring, and Microservices. Skilled at building high-quality solutions in Agile environments through teamwork and collaboration. A fast learner with a strong passion for problem-solving and continuous improvement.",
+                "email": "essadeqelaamiri@gmail.com",
+                "phone": "Contact Me",
+                "location": "Morocco",
+                "linkedin": "https://linkedin.com/in/elaamiri-essadeq/",
+                "github": "https://github.com/essadeq-elaamiri",
+                "image": "https://i.ibb.co/hxYz6gt/profile.jpg",
+                "status": "Open to Work"
+            },
+            "skills": [
+                {
+                    "category": "Programming",
+                    "icon": "💻",
+                    "items": "Java, Python, JavaScript, TypeScript",
+                    "logos": ["Java", "Python", "JavaScript", "TypeScript"]
+                },
+                {
+                    "category": "Development",
+                    "icon": "🚀",
+                    "items": "Spring ecosystem, Microservices architecture, Angular",
+                    "logos": ["Spring", "Angular", "React"]
+                },
+                {
+                    "category": "Data",
+                    "icon": "🗄️",
+                    "items": "SQL (MySQL, PostgreSQL), NoSQL (MongoDB), ORM (JPA/Hibernate), Spark, GraphQL",
+                    "logos": ["MySQL", "PostgreSQL", "MongoDB"]
+                },
+                {
+                    "category": "Tools",
+                    "icon": "🛠️",
+                    "items": "Docker, Jenkins, Git/GitHub, Maven, JUnit, Mockito, Selenium, Linux",
+                    "logos": ["Docker", "Git", "Linux"]
+                }
+            ],
+            "experience": [
+                {
+                    "title": "Software Engineer",
+                    "company": "Berexia",
+                    "location": "Casablanca",
+                    "period": "Aug 2023 - Present",
+                    "icon": "💼",
+                    "highlights": [
+                        "Member of IT Team responsible for corrective and evolutive maintenance of reinsurance and claims management systems for Scor",
+                        "Developing and maintaining features using Java, Spring Boot, Spring Security, Spring JPA, Hibernate, TypeScript, Angular, Microsoft GraphAPI",
+                        "Collaborating with team members to perform functional needs analysis and translate them into technical requirements",
+                        "Contributing to writing and reviewing user stories, ensuring alignment with business objectives"
+                    ]
+                },
+                {
+                    "title": "Software Engineer Intern",
+                    "company": "Berexia",
+                    "location": "Casablanca",
+                    "period": "Feb 2023 - Aug 2023",
+                    "icon": "🎓",
+                    "highlights": [
+                        "Participated in corrective and evolutive maintenance of the ForeWriter platform for Scor",
+                        "Developed features using Java, Spring, and JSF within Agile Scrum methodology"
+                    ]
+                },
+                {
+                    "title": "Software Developer Intern",
+                    "company": "Hassan II University, ESTC, RITM Lab",
+                    "location": "Casablanca",
+                    "period": "Jul 2022 - Sep 2022",
+                    "icon": "🤖",
+                    "highlights": [
+                        "Developed a Chatbot for conversing in Moroccan Arabic (Darija) using NLP techniques",
+                        "Applied preprocessing techniques, NLP, Python, and Kaggle datasets"
+                    ]
+                },
+                {
+                    "title": "Software Developer Intern",
+                    "company": "Junior Chamber International (JCI)",
+                    "location": "Kenitra",
+                    "period": "Aug 2021 - Sep 2021",
+                    "icon": "🌐",
+                    "highlights": [
+                        "Implemented management and attendance control system for online courses",
+                        "Used PHP, JavaScript, HTML, CSS, Bootstrap, and Git"
+                    ]
+                }
+            ],
+            "projects": [
+                {
+                    "name": "E-Commerce Microservices Platform",
+                    "icon": "🛒",
+                    "description": "Built a scalable e-commerce platform using microservices architecture with Spring Boot, featuring product catalog, order management, and payment processing services.",
+                    "technologies": ["Java", "Spring Boot", "Docker", "MongoDB", "RabbitMQ"],
+                    "github": "https://github.com/yourusername/project1",
+                    "demo": "https://demo-link.com"
+                },
+                {
+                    "name": "Task Management Dashboard",
+                    "icon": "📋",
+                    "description": "Developed a full-stack task management application with real-time updates, user authentication, and team collaboration features using Angular and Spring.",
+                    "technologies": ["Angular", "TypeScript", "Spring Boot", "PostgreSQL", "WebSocket"],
+                    "github": "https://github.com/yourusername/project2",
+                    "demo": ""
+                },
+                {
+                    "name": "Data Analytics Pipeline",
+                    "icon": "📊",
+                    "description": "Created an ETL pipeline for processing and analyzing large datasets using Apache Spark, with automated reporting and visualization dashboards.",
+                    "technologies": ["Python", "Apache Spark", "MySQL", "Docker", "Pandas"],
+                    "github": "https://github.com/yourusername/project3",
+                    "demo": ""
+                }
+            ],
+            "education": [
+                {
+                    "degree": "Engineering Degree",
+                    "field": "Computer Engineering, Big Data and Cloud Computing",
+                    "institution": "Hassan II University, ENSET Mohammedia",
+                    "period": "2020 - 2023",
+                    "icon": "🎓"
+                },
+                {
+                    "degree": "Professional Bachelor",
+                    "field": "Embedded Computer Systems",
+                    "institution": "Ibn Zohr University, Faculty of Applied Sciences",
+                    "period": "2019 - 2020",
+                    "icon": "📚"
+                },
+                {
+                    "degree": "Higher Technician Diploma (BTS)",
+                    "field": "Networks and Computer Systems",
+                    "institution": "Lyssan Eddine Ibn Khatib Institute, Laayoune",
+                    "period": "2017 - 2019",
+                    "icon": "💻"
+                }
+            ],
+            "certifications": [
+                {
+                    "name": "Oracle Certified Professional: Java SE 21 Developer",
+                    "issuer": "Oracle",
+                    "date": "Feb 2025"
+                },
+                {
+                    "name": "Oracle Certified Professional: Java SE 17 Developer",
+                    "issuer": "Oracle",
+                    "date": "Feb 2025"
+                },
+                {
+                    "name": "M001: MongoDB Basics",
+                    "issuer": "MongoDB",
+                    "date": "Dec 2021"
+                }
+            ],
+            "languages": ["Arabic", "English", "French"],
+            "interests": [
+                {
+                    "category": "Professional",
+                    "icon": "💼",
+                    "items": "Backend Development, Problem-Solving, DevOps, Big Data, AI"
+                },
+                {
+                    "category": "Personal",
+                    "icon": "🏃",
+                    "items": "Long-distance Running, Volunteering (Wajihni - providing academic and career guidance to youth)"
+                }
+            ]
+        };
+
+        function renderPortfolio() {
+            const data = portfolioData;
+            const container = document.getElementById('portfolio');
+            
+            container.innerHTML = `
+                <div class="hero">
+                    <div class="hero-content">
+                        <div class="profile-section">
+                            <div class="profile-img">
+                                <img src="${data.personal.image}" alt="${data.personal.name}" onerror="this.parentElement.innerHTML='${data.personal.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase()}'">
+                            </div>
+                            <div class="status-badge">
+                                <span class="status-dot"></span>
+                                ${data.personal.status}
+                            </div>
+                        </div>
+                        <div class="hero-text">
+                            <h1>${data.personal.name}</h1>
+                            <h2>${data.personal.title}</h2>
+                            <p>${data.personal.summary}</p>
+                            <div class="contact-links">
+                                <a href="mailto:${data.personal.email}">📧 Email</a>
+                                <a href="tel:${data.personal.phone}">📱 Phone</a>
+                                <a href="${data.personal.linkedin}" target="_blank">💼 LinkedIn</a>
+                                <a href="${data.personal.github}" target="_blank">💻 GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2><span class="skill-icon">💡</span> Skills & Technologies</h2>
+                    <div class="skills-grid">
+                        ${data.skills.map(skill => `
+                            <div class="skill-category">
+                                <h3><span class="skill-icon">${skill.icon}</span>${skill.category}</h3>
+                                <p>${skill.items}</p>
+                                <div class="tech-logos">
+                                    ${skill.logos.map(logo => `
+                                        <div class="tech-logo" title="${logo}">
+                                            <img src="${techLogos[logo]}" alt="${logo}">
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2><span class="skill-icon">💼</span> Experience</h2>
+                    ${data.experience.map(exp => `
+                        <div class="experience-item">
+                            <h3>${exp.icon} ${exp.title}</h3>
+                            <div class="meta">
+                                <span class="meta-icon">🏢</span>${exp.company}
+                                <span class="meta-icon">📍</span>${exp.location}
+                                <span class="meta-icon">📅</span>${exp.period}
+                            </div>
+                            <ul>
+                                ${exp.highlights.map(h => `<li>${h}</li>`).join('')}
+                            </ul>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <div class="section">
+                    <h2><span class="skill-icon">🚀</span> Projects</h2>
+                    <div class="projects-grid">
+                        ${data.projects.map(project => `
+                            <div class="project-card">
+                                <div class="project-content">
+                                    <h3>${project.icon} ${project.name}</h3>
+                                    <p>${project.description}</p>
+                                    <div class="project-tech">
+                                        ${project.technologies.map(tech => `
+                                            <span class="tech-tag">${tech}</span>
+                                        `).join('')}
+                                    </div>
+                                    <div class="project-links">
+                                        ${project.github ? `<a href="${project.github}" target="_blank">🔗 GitHub</a>` : ''}
+                                        ${project.demo ? `<a href="${project.demo}" target="_blank">🌐 Demo</a>` : ''}
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2><span class="skill-icon">🎓</span> Education</h2>
+                    ${data.education.map(edu => `
+                        <div class="education-item">
+                            <h3>${edu.icon} ${edu.degree}</h3>
+                            <div class="meta">
+                                <span class="meta-icon">🏛️</span>${edu.institution}
+                                <span class="meta-icon">📅</span>${edu.period}
+                            </div>
+                            <p>${edu.field}</p>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <div class="section">
+                    <h2><span class="skill-icon">🏆</span> Certifications</h2>
+                    <div class="certifications-grid">
+                        ${data.certifications.map(cert => `
+                            <div class="cert-card">
+                                <h3>${cert.name}</h3>
+                                <p>${cert.issuer} • ${cert.date}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2><span class="skill-icon">🌍</span> Languages & Interests</h2>
+                    <div class="skills-grid">
+                        <div class="skill-category">
+                            <h3><span class="skill-icon">🗣️</span>Languages</h3>
+                            <p>${data.languages.join(', ')}</p>
+                        </div>
+                        ${data.interests.map(interest => `
+                            <div class="skill-category">
+                                <h3><span class="skill-icon">${interest.icon}</span>${interest.category}</h3>
+                                <p>${interest.items}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2><span class="skill-icon">📬</span> Get In Touch</h2>
+                    <div style="max-width: 600px; margin: 0 auto;">
+                        <p style="text-align: center; color: #64748b; margin-bottom: 30px; font-size: 1.1em;">
+                            Have a project in mind or want to collaborate? Feel free to reach out!
+                        </p>
+                        <form id="contactForm" style="display: flex; flex-direction: column; gap: 20px;">
+                            <div>
+                                <input type="text" id="contactName" placeholder="Your Name *" required 
+                                    style="width: 100%; padding: 15px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1em; transition: all 0.3s ease;">
+                            </div>
+                            <div>
+                                <input type="email" id="contactEmail" placeholder="Your Email *" required 
+                                    style="width: 100%; padding: 15px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1em; transition: all 0.3s ease;">
+                            </div>
+                            <div>
+                                <input type="text" id="contactSubject" placeholder="Subject *" required 
+                                    style="width: 100%; padding: 15px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1em; transition: all 0.3s ease;">
+                            </div>
+                            <div>
+                                <textarea id="contactMessage" placeholder="Your Message *" required rows="6"
+                                    style="width: 100%; padding: 15px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1em; resize: vertical; transition: all 0.3s ease;"></textarea>
+                            </div>
+                            <button type="submit" 
+                                style="padding: 15px 40px; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; border: none; border-radius: 50px; font-size: 1.1em; font-weight: 600; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);">
+                                📨 Send Message
+                            </button>
+                        </form>
+                        <div id="formStatus" style="margin-top: 20px; text-align: center; font-weight: 600;"></div>
+                    </div>
+                </div>
+            `;
+
+            document.querySelectorAll('.section').forEach((section, index) => {
+                section.style.animationDelay = `${index * 0.1}s`;
+            });
+        }
+
+        function toggleEditPanel() {
+            const panel = document.getElementById('editPanel');
+            panel.classList.toggle('active');
+            
+            if (panel.classList.contains('active')) {
+                document.getElementById('jsonEditor').value = JSON.stringify(portfolioData, null, 2);
+            }
+        }
+
+        function saveJSON() {
+            try {
+                const jsonText = document.getElementById('jsonEditor').value;
+                portfolioData = JSON.parse(jsonText);
+                renderPortfolio();
+                alert('✅ Portfolio updated successfully!');
+                toggleEditPanel();
+            } catch (error) {
+                alert('❌ Invalid JSON format. Please check your syntax.\n\nError: ' + error.message);
+            }
+        }
+
+        function copyJSON() {
+            const jsonText = document.getElementById('jsonEditor').value;
+            navigator.clipboard.writeText(jsonText).then(() => {
+                alert('📋 JSON copied to clipboard!');
+            }).catch(() => {
+                alert('❌ Failed to copy. Please copy manually.');
+            });
+        }
+
+        renderPortfolio();
+
+        // Contact form handling
+        document.addEventListener('DOMContentLoaded', function() {
+            setupContactForm();
+        });
+
+        function setupContactForm() {
+            // Wait a bit for the form to be rendered
+            setTimeout(() => {
+                const form = document.getElementById('contactForm');
+                if (form) {
+                    form.addEventListener('submit', handleFormSubmit);
+                    
+                    // Add focus effects to inputs
+                    const inputs = form.querySelectorAll('input, textarea');
+                    inputs.forEach(input => {
+                        input.addEventListener('focus', function() {
+                            this.style.borderColor = 'var(--primary)';
+                            this.style.boxShadow = '0 0 0 3px rgba(37, 99, 235, 0.1)';
+                        });
+                        input.addEventListener('blur', function() {
+                            this.style.borderColor = '#e2e8f0';
+                            this.style.boxShadow = 'none';
+                        });
+                    });
+
+                    // Add hover effect to button
+                    const button = form.querySelector('button[type="submit"]');
+                    if (button) {
+                        button.addEventListener('mouseenter', function() {
+                            this.style.transform = 'translateY(-3px)';
+                            this.style.boxShadow = '0 8px 25px rgba(37, 99, 235, 0.4)';
+                        });
+                        button.addEventListener('mouseleave', function() {
+                            this.style.transform = 'translateY(0)';
+                            this.style.boxShadow = '0 4px 15px rgba(37, 99, 235, 0.3)';
+                        });
+                    }
+                }
+            }, 100);
+        }
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('contactName').value;
+            const email = document.getElementById('contactEmail').value;
+            const subject = document.getElementById('contactSubject').value;
+            const message = document.getElementById('contactMessage').value;
+            
+            // Create mailto link with pre-filled content
+            const mailtoLink = `mailto:${portfolioData.personal.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
+                `Name: ${name}\nEmail: ${email}\n\n${message}`
+            )}`;
+            
+            // Open default email client
+            window.location.href = mailtoLink;
+            
+            // Show success message
+            const statusDiv = document.getElementById('formStatus');
+            statusDiv.innerHTML = '<span style="color: #10b981;">✅ Opening your email client...</span>';
+            
+            // Reset form after a delay
+            setTimeout(() => {
+                document.getElementById('contactForm').reset();
+                statusDiv.innerHTML = '';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
